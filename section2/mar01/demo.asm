@@ -10,6 +10,8 @@ DOS = 21h
 ;msg	BYTE	"Hello, world!", 0
 
 warray	DWORD	1A2B3C4Dh
+	DWORD	5E6F7081h
+	
 
 next	WORD	0
 .code
