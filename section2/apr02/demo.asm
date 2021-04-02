@@ -114,6 +114,8 @@ main PROC
 	mov	dx, offset HardwareClockVector
 	call	RestoreVector
 	
+	call	NewLine
+
 	mov	al, INTERRUPT
 	mov	dx, offset ClockVector
 	call	RestoreVector
@@ -121,19 +123,18 @@ main PROC
 	mov	cx, 0830h
 	mov	al, '$'
 	call	ScreenChar
-
+	
+	
 	mov	ax, TERMINATE		; Signal DOS we are done
 	int	DOS
 main ENDP
 
 rowcol2index PROC
-	;; This code was written in a rush during the end of class. You should
-	;; not use it blindly. Instead, write it yourself with this code as a
-	;; guide. Be sure to test it--unlike what we did in class.
 	;; ch - row
 	;; cl - col
-	;; returns:
+	;; return
 	;; ax - index
+
 	pushf
 	push	cx
 	
@@ -145,18 +146,19 @@ rowcol2index PROC
 	
 	pop	cx
 	popf
+
 	ret
 rowcol2index ENDP
 
 ScreenChar PROC
-	;; This code was written in a rush during the end of class. You should
-	;; not use it blindly. Instead, write it yourself with this code as a
-	;; guide. Be sure to test it--unlike what we did in class.
-	
-	;; al - char
 	;; ch - row
 	;; cl - col
+	;; al - character
 
+	push	ax
+	push	di
+	push	es
+	
 	mov	di, 0B800h
 	mov	es, di
 	
@@ -165,11 +167,12 @@ ScreenChar PROC
 	mov	di, ax
 	pop	ax
 	
-	mov	ah, 00001111b
-	
+	mov	ah, 10001111b
 	mov	es:[di], ax
-
-
+	
+	pop	es
+	pop	di
+	pop	ax
 	ret
 ScreenChar ENDP
 
