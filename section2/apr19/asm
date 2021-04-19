@@ -1,0 +1,33 @@
+#! /Library/Frameworks/Python.framework/Versions/3.7/bin/python3
+
+# -*- python -*-
+
+import sys
+import re
+
+def start():
+    if (len(sys.argv) < 2):
+        raise SystemExit("Usage: asm <filename>")
+    
+    filename = sys.argv[1]
+    try:
+        inFd = open(filename, "r")
+    except IOError:
+        raise SystemExit("Error opening input file: " + filename)
+
+    pass1(inFd)
+
+
+def pass1(inFd):
+
+    line = inFd.readline()
+    while line != "":
+        inst = parseInstruction(line)
+        line = inFd.readline()
+
+def parseInstruction(line):
+
+    print(line)
+
+if __name__ == "__main__":
+    start()
