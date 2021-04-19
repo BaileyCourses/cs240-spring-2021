@@ -26,8 +26,12 @@ def pass1(inFd):
         line = inFd.readline()
 
 def parseInstruction(line):
+    line = line.strip()
 
-    print(line)
+    match = re.match(r"([A-Z_][A-Z_0-9]*):", line, re.IGNORECASE)
+
+    if match:
+        print(line)
 
 if __name__ == "__main__":
     start()
